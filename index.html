@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div class="web-container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h1>NoteIt</h1>
+            </div>
+
+            <div class="search-area">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search your notes...">
+            </div>
+
+            <div class="actions-area">
+                <button id="themeToggle" class="icon-btn">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+                <div class="user-avatar" title="Login/Logout">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="pinnedSection" class="notes-section">
+                <h2>Pinned</h2>
+                <div class="notes-grid" id="pinnedGrid"></div>
+            </div>
+
+            <div id="othersSection" class="notes-section">
+                <h2>Others</h2>
+                <div class="notes-grid" id="othersGrid"></div>
+            </div>
+        </main>
+
+        <button id="fabBtn" class="fab">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <div id="addNoteModal" class="modal hidden">
+            <div class="modal-header">
+                <h3>New Note</h3>
+                <button id="closeModalBtn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <input type="text" id="noteTitle" placeholder="Title">
+            <textarea id="noteContent" placeholder="Start typing you content..."></textarea>
+            <button id="saveNoteBtn" class="save-btn">Save Note</button>
+        </div>
+    </div>
+
+    <footer>
+            <p>Made with <i class="fa-solid fa-heart heart-icon"></i> by SSSR</p>
+            <p>Visit Us Again</p>
+        </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
