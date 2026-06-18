@@ -43,6 +43,13 @@
                 <h2>Others</h2>
                 <div class="notes-grid" id="othersGrid"></div>
             </div>
+
+            <div id="emptyState" class="empty-state hidden">
+                <div class="empty-icon">📝</div>
+                <h2>No notes yet</h2>
+                <p>Start capturing your ideas and tasks in one place.</p>
+                <button id="emptyCreateBtn" class="save-btn">+ Create Note</button>
+            </div>
         </main>
 
         <button id="fabBtn" class="fab">
@@ -64,6 +71,17 @@
             <p>Made with <i class="fa-solid fa-heart heart-icon"></i> by SSSR</p>
             <p>Visit Us Again</p>
         </footer>
+
+    <div id="authModal" class="modal hidden">
+    <div class="modal-header">
+        <h3>Login</h3>
+    </div>
+
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="password" id="passwordInput" placeholder="Password">
+
+    <button id="loginBtn" class="save-btn">Login</button>
+    </div>
 
     <script src="script.js"></script>
 </body>

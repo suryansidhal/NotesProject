@@ -1,35 +1,4 @@
-let notes = [
-    { id: 1, 
-      title: 'Could Be Your First', 
-      content: 'This is your first note. Feel free to edit or delete it.', 
-      date: 'Jun 3', 
-      pinned: true, 
-      colorClass: 'color-0' },
-    { id: 2, 
-        title: 'Universe\'s Message', 
-        content: 'Unleash the wildest side of yours!.', 
-        date: 'Jun 3', 
-        pinned: true, 
-        colorClass: 'color-1' },
-    { id: 3, 
-        title: 'Your Message', 
-        content: 'Discuss Q3 roadmap priorities. Review design system updates. Plan team offsite for next month.', 
-        date: 'Jun 3', 
-        pinned: false, 
-        colorClass: 'color-2' },
-    { id: 4, 
-        title: 'someone\'s Message', 
-        content: 'Atomic Habits by James Clear. Deep Work by Cal Newport. The Design of Everyday Things.', 
-        date: 'Jun 3', 
-        pinned: false, 
-        colorClass: 'color-3' },
-    { id: 5, 
-        title: 'To-do\'s Message', 
-        content: 'Send the proposal by Friday. Follow up with the design team about the new color palette.', 
-        date: 'Jun 3', 
-        pinned: false, 
-        colorClass: 'color-4' }
-];
+let notes = [];
 
 
 const pinnedGrid = document.getElementById('pinnedGrid');
@@ -45,6 +14,13 @@ const closeModalBtn = document.getElementById('closeModalBtn');
 const saveNoteBtn = document.getElementById('saveNoteBtn');
 const noteTitleInput = document.getElementById('noteTitle');
 const noteContentInput = document.getElementById('noteContent');
+const authModal = document.getElementById('authModal');
+const loginBtn = document.getElementById('loginBtn');
+const emailInput = document.getElementById('emailInput');
+const passwordInput = document.getElementById('passwordInput');
+const userAvatar = document.querySelector('.user-avatar');
+const emptyState = document.getElementById('emptyState');
+const emptyCreateBtn = document.getElementById('emptyCreateBtn');
 
 let isDarkMode = false;
 let searchQuery = '';
@@ -71,6 +47,43 @@ function createNoteHTML(note) {
     `;
 }
 
+async function loadNotes() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        renderNotes();
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/notes', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            notes = data.notes.map((note, index) => ({
+                id: note._id,
+                title: note.title,
+                content: note.content,
+                date: 'Today',
+                pinned: false,
+                colorClass: `color-${index % 5}`
+            }));
+
+            renderNotes();
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error loading notes');
+    }
+}
 
 function renderNotes() {
    
@@ -81,6 +94,12 @@ function renderNotes() {
 
     const pinnedNotes = filteredNotes.filter(n => n.pinned);
     const otherNotes = filteredNotes.filter(n => !n.pinned);
+
+    if (filteredNotes.length === 0 && localStorage.getItem('token')) {
+        emptyState.classList.remove('hidden');
+    } else {
+        emptyState.classList.add('hidden');
+    }
 
     if (pinnedNotes.length > 0) {
         pinnedSection.style.display = 'block';
@@ -173,4 +192,40 @@ noteContentInput.addEventListener('keydown', (e) => {
     }
 });
 
-renderNotes();
+loadNotes();
+
+userAvatar.addEventListener('click', () => {
+    authModal.classList.remove('hidden');
+});
+
+loginBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    try {
+        const response = await fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+            alert('Login successful');
+            authModal.classList.add('hidden');
+            loadNotes();
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error connecting to server');
+    }
+});
