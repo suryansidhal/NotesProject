@@ -61,7 +61,7 @@ async function loadNotes() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/notes', {
+        const response = await fetch('https://noteit-backend-ekdi.onrender.com/notes', {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -215,8 +215,8 @@ loginBtn.addEventListener('click', async () => {
     const password = passwordInput.value.trim();
 
     const url = isSignupMode
-        ? 'http://localhost:5000/signup'
-        : 'http://localhost:5000/login';
+        ? 'https://noteit-backend-ekdi.onrender.com/signup'
+        : 'https://noteit-backend-ekdi.onrender.com/login';
 
     const bodyData = isSignupMode
         ? { name, email, password }
