@@ -133,32 +133,49 @@ window.deleteNote = function(id) {
     renderNotes();
 };
 
-function saveNote() {
+async function saveNote() {
     const title = noteTitleInput.value.trim();
     const content = noteContentInput.value.trim();
 
     if (!title && !content) return;
 
-    const randomColorClass = `color-${Math.floor(Math.random() * 5)}`;
-    
-    const newNote = {
-        id: Date.now(),
-        title: title || 'Untitled Note',
-        content: content,
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        pinned: false,
-        colorClass: randomColorClass
-    };
+    const token = localStorage.getItem('token');
 
-    notes.unshift(newNote); 
-    
-    noteTitleInput.value = '';
-    noteContentInput.value = '';
-    addNoteModal.classList.add('hidden');
-    fabBtn.style.display = 'block';
-    
-    renderNotes();
-}
+    if (!token) {
+        alert('Please login first');
+        return;
+    }
+
+    try {
+        const response = await fetch('https://noteit-backend-ekdi.onrender.com/notes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({
+                title: title || 'Untitled Note',
+                content
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            noteTitleInput.value = '';
+            noteContentInput.value = '';
+            addNoteModal.classList.add('hidden');
+            fabBtn.style.display = 'block';
+
+            loadNotes();
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error saving note');
+    }
+};
 
 searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value;
