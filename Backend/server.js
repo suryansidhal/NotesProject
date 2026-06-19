@@ -1,10 +1,10 @@
 require("dotenv").config();
 
-const User = require("./models/User");
+const User = require("./models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Note = require("./models/Note");
-const authMiddleware = require("./middleware/authMiddleware");
+const Note = require("./models/note");
+const authMiddleware = require("./middleware/authmiddleware");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
