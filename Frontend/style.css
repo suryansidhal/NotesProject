@@ -280,16 +280,22 @@ body.dark-mode .color-4 {
 
 .modal {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 320px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 500px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-    transition: opacity 0.3s;
+    border-radius: 1.5rem;
+    padding: 2rem;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    z-index: 100;
 }
 
 body.dark-mode .modal {
@@ -314,12 +320,15 @@ body.dark-mode .modal {
 
 .modal input {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #e5e7eb;
-    background: transparent;
-    color: #111827;
-    padding: 0.5rem 0;
+    padding: 0.9rem;
     margin-bottom: 1rem;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+
+    background: #f9fafb;
+    color: #111827;
+
     outline: none;
     font-size: 1rem;
 }
@@ -335,13 +344,19 @@ body.dark-mode .modal input {
 
 .modal textarea {
     width: 100%;
-    height: 120px;
-    border: none;
-    background: transparent;
+    height: 180px;
+
+    padding: 0.9rem;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+
+    background: #f9fafb;
     color: #111827;
+
     resize: none;
     outline: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
 }
 
 body.dark-mode .modal textarea {
@@ -381,4 +396,63 @@ body.dark-mode footer {
 .heart-icon {
     color: #053318; 
     margin: 0 0.25rem; 
+}
+
+.empty-state {
+    max-width: 420px;
+    margin: 4rem auto;
+    padding: 2rem;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+    font-family: Georgia, serif;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state.hidden {
+    display: none;
+}
+
+body.dark-mode .empty-state {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.auth-switch-text {
+    text-align: center;
+    margin-top: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.auth-link {
+    border: none;
+    background: none;
+    color: #15803d;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 0;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
 }
